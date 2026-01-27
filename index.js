@@ -79,20 +79,30 @@ const LearnerSubmissions = [
 
 
 function getLearnerData(course, ag, submissions) {
-    let learners = [{learner_id: 0, averageScore: 1, a1:.5, a2: .4, a3:.3,},{learner_id: 0, averageScore: 1, a1:.5, a2: .4, a3:.3,}]; // This array is to store learner information
+    let learners = [{learner_id: 0, averageScore: 1, a1:.5, a2: .4,},{learner_id: 0, averageScore: 1, a1:.5, a2: .4,}]; // This array is to store learner information
     try{
         if(course.id!==ag.course_id){ // Checks to see if the course id is valid, if not, sends an error.
             throw new Error("Incorrect course ID.");
         }
-        let x = 0; 
-        let y = 0;
+        let x = 0; let y = 0; // Incremental vars
         while (y<ag.assignments.length && x<submissions.length){ // Error detection for assignments not matching
-            if(submissions[x].learner_id!==ag.assignments[y].id){
+            if(submissions[x].assignment_id!==ag.assignments[y].id){
+                console.log(x,y);
                 throw new Error("The assginments do not match.");
+                
+            } else if(y===ag.assignments.length && x===submissions.length){
+                break;
+            } else if(x===submissions.length){ //What this is doing is that is first going through each submission and checking their ids against the ag ids, once it does that, it sets x back to 0, then increments y, to check the next round of ids.
+                y+=1;
+                x=0;
             }
-            x++; y++; // Increments both vars
+            x++; // Increments both vars
         }
-
+        for(let i = 0; i<ag.assignments.length; i++){
+            if(ag.assignments[i].points_possible<=0){
+                throw new Error("Points possible cannot be 0 or lower.")
+            }
+        }
     
     } catch(error){
         console.log("There was an error: " + error.message);
