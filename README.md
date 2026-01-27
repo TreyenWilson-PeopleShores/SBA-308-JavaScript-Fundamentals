@@ -1,7 +1,6 @@
 # SBA-308-JavaScript-Fundamentals
 
 **TO-DO - Requirements**
-- Declare variables properly using let and const where appropriate.
 - Use operators to perform calculations on variables and literals.
 - Use strings, numbers, and Boolean values cached within variables.
 - Use at least two if/else statements to control program flow. Optionally, use at least one switch statement.
@@ -17,7 +16,8 @@
 - Include a README file that contains a description of your application.
 
 **Completed - Requirements**
-- 
+- Declare variables properly using let and const where appropriate.
+
 
 
 **Instructions**

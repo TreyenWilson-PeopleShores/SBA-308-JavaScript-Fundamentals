@@ -80,12 +80,26 @@ const LearnerSubmissions = [
 
 function getLearnerData(course, ag, submissions) {
     let learners = [{learner_id: 0, averageScore: 1, a1:.5, a2: .4, a3:.3,},{learner_id: 0, averageScore: 1, a1:.5, a2: .4, a3:.3,}]; // This array is to store learner information
-    if(course.id!==ag.course_id){ // Checks to see if the course id is valid, if not, sends an error.
-        throw new Error("Incorrect course ID.");
+    try{
+        if(course.id!==ag.course_id){ // Checks to see if the course id is valid, if not, sends an error.
+            throw new Error("Incorrect course ID.");
+        }
+        let x = 0; 
+        let y = 0;
+        while (y<ag.assignments.length && x<submissions.length){ // Error detection for assignments not matching
+            if(submissions[x].learner_id!==ag.assignments[y].id){
+                throw new Error("The assginments do not match.");
+            }
+            x++; y++; // Increments both vars
+        }
+
+    
+    } catch(error){
+        console.log("There was an error: " + error.message);
     }
 
-
-    const result = [ // use this for format
+    const result = learners; //This sets learns to the result.
+    /*[ // use this for format    - Use this for formulas
     {
         id: submissions[x].learner_id,
         avg: 0.985, // (47 + 150) / (50 + 150)
@@ -98,7 +112,8 @@ function getLearnerData(course, ag, submissions) {
         1: 0.78, // 39 / 50
         2: 0.833 // late: (140 - 15) / 150
     }
-    ];
+    ]; */
+
 
     return result;
 }
