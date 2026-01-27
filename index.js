@@ -86,7 +86,7 @@ function LaterDate(dueDate, submittedDate){ //Checks to see if Due date is befor
 }
 
 function getLearnerData(course, ag, submissions) {
-    let learners = [{learner_id: 0, averageScore: 1, a1:.5, a2: .4,},{learner_id: 0, averageScore: 1, a1:.5, a2: .4,}]; // This array is to store learner information
+    let learners = [{learner_id: 123, averageScore: 1, a1:.5, a2: .4,},{learner_id: 125, averageScore: 1, a1:.5, a2: .4,}]; // This array is to store learner information
     try{
         if(course.id!==ag.course_id){ // Checks to see if the course id is valid, if not, sends an error.
             throw new Error("Incorrect course ID.");
@@ -122,10 +122,26 @@ function getLearnerData(course, ag, submissions) {
         console.log("There was an error: " + error.message);
     }
 
-    
-    for(let i = 0; i<submissions.length; i++){
-        // Temporary code to make sure logic works // CHANGE THIS IS BAD PRACTICE
-        LaterDate(ag.assignments[i].due_at, submissions[i].submission.submitted_at);
+
+    for(const assignment of ag.assignments){ 
+    //This puts the average score for assignments 1 and 2 into the learners array
+        for(const submission of submissions){
+            if(assignment.id===submission.assignment_id && assignment.id==1){
+                
+                if(submission.learner_id===125){
+                    console.log(submission.score, assignment.points_possible);
+                    learners[0].a1 = submission.submission.score/assignment.points_possible
+                } else if(submission.learner_id===132){
+                    learners[1].a1 = submission.submission.score/assignment.points_possible
+                }
+            } else if(assignment.id===submission.assignment_id && assignment.id==2){
+                if(submission.learner_id===125){
+                    learners[0].a2 = submission.submission.score/assignment.points_possible
+                } else if(submission.learner_id===132){
+                    learners[1].a2 = submission.submission.score/assignment.points_possible
+                }
+            }
+        } console.log(7);
     }
 
 
