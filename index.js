@@ -80,6 +80,11 @@ function NotANumberError(number){
     throw new Error("That is not a valid number.");
 }
 
+function LaterDate(dueDate, submittedDate){ //Checks to see if Due date is before submitted date, if so, returns true.
+    let date1 = new Date(dueDate); let date2 = new Date(submittedDate); // Makes both dates into usable formats
+    return submittedDate>dueDate;
+}
+
 function getLearnerData(course, ag, submissions) {
     let learners = [{learner_id: 0, averageScore: 1, a1:.5, a2: .4,},{learner_id: 0, averageScore: 1, a1:.5, a2: .4,}]; // This array is to store learner information
     try{
@@ -116,6 +121,13 @@ function getLearnerData(course, ag, submissions) {
     } catch(error){
         console.log("There was an error: " + error.message);
     }
+
+    
+    for(let i = 0; i<submissions.length; i++){
+        // Temporary code to make sure logic works // CHANGE THIS IS BAD PRACTICE
+        LaterDate(ag.assignments[i].due_at, submissions[i].submission.submitted_at);
+    }
+
 
     const result = learners; //This sets learns to the result.
     /*[ // use this for format    - Use this for formulas
