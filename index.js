@@ -79,7 +79,10 @@ const LearnerSubmissions = [
 function AnalyzeData(AssignmentGroup, LearnerSubmissions, CourseInfo){
     while (true){ // Main loop for this
         for(let x = 0; x<CourseInfo.length; x+=1){ //This is the loop to go through all the CourseInfo data
-            if(CourseInfo[x].assignment_id!==AssignmentGroup.assignments.id[x])       // Checks to see if assignment exists
+            for(assignments of AssignmentGroup.assignments){ //This is going through the assignments in assignmentgroup
+                if(CourseInfo[x].assignment_id!==assignments.id)       // Checks to see if assignment exists
+                {}
+            }
         }
 
     }
