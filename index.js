@@ -63,7 +63,7 @@ const LearnerSubmissions = [
     assignment_id: 1,
     submission: {
       submitted_at: "2023-01-24",
-      score: 39
+      score: "39"
     }
   },
   {
@@ -76,7 +76,9 @@ const LearnerSubmissions = [
   }
 ];
 
-
+function NotANumberError(number){
+    throw new Error("That is not a valid number.");
+}
 
 function getLearnerData(course, ag, submissions) {
     let learners = [{learner_id: 0, averageScore: 1, a1:.5, a2: .4,},{learner_id: 0, averageScore: 1, a1:.5, a2: .4,}]; // This array is to store learner information
@@ -93,7 +95,6 @@ function getLearnerData(course, ag, submissions) {
         }
         for (let x = 0; x<submissions.length; x++){// Error detection for assignments not matching
             if(!assignmentIDs.includes(submissions[x].assignment_id)){ //this is checking it against each elememt in that array
-                console.log(x,y);
                 throw new Error("The assginments do not match.");  
             } 
         }
@@ -103,7 +104,15 @@ function getLearnerData(course, ag, submissions) {
                 throw new Error("Points possible cannot be 0 or lower.")
             }
         }
-    
+        for(let i = 0; i<ag.assignments.length; i++){
+            if(isNaN(ag.assignments[i].points_possible)){
+                NotANumberError();
+            }
+        } for(let i = 0; i<submissions.length; i++){
+            if(isNaN(submissions[i].submission.score)){
+                NotANumberError();
+            }
+        }
     } catch(error){
         console.log("There was an error: " + error.message);
     }
