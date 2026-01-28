@@ -183,7 +183,7 @@ function getLearnerData(course, ag, submissions) {
                   // This checks to see if the assignment has been marked to only be graded at a later date,
                   // then it deletes the entry from learners
                   learners.pop(info);
-                  needsGraded = true;
+                  needsGraded = true; 
                 }
 
               // Second loop
