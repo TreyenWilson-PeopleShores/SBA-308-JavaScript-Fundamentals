@@ -220,12 +220,34 @@ function getLearnerData(course, ag, submissions) {
                 }
                 organizeLearners2[id].push(info);  
             }
+
+
             console.log ("or2", organizeLearners2);
-            for (learner_id in organizeLearners2){
-             // results[learner_id] = {id: [learner_id]};
-              for(info in organizeLearners2[learner_id]){ // This will be the same learner id
-                results[info] = {id: learner_id, avg: "temp1", };
+            for (let learner_id in organizeLearners2){
+
+              let finished ={
+                id: Number(learner_id),
+                avg: 1,
               }
+              console.log("Finish", finished)
+             // results[learner_id] = {id: [learner_id]};
+              for(let info of organizeLearners2[learner_id]){ // This will be the same learner id
+                console.log("test", Object.keys(info));
+                console.log("HERE", info);
+                assignment_ids = Object.keys(info)
+                assignment_id = assignment_ids[0];
+                //above gets the unknown assignment id
+                console.log ("here again", info);
+                  //finished[info] = ({id: info.id, avg: "temp1",});
+                finished.avg = 5/3;
+                finished[assignment_id] = "test";
+                  
+              // second loop
+              
+              }
+              //results[info] = ({id: organizeLearners2[learner_id][info].id, avg: "temp1",});
+            // outer loop
+            results.push(finished);
             }
 
 
@@ -317,5 +339,5 @@ function getLearnerData(course, ag, submissions) {
 
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
-//console.log(result);
+console.log(result);
 console.log(results);

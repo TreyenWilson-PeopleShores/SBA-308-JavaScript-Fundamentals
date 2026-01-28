@@ -1,17 +1,18 @@
 # SBA-308-JavaScript-Fundamentals
 This is my SBA-308 assignment. In it, I am trying to properly format the data to print out what the assignment desires. It needs Node.js. To run the code, type "node index.js" where the index.js is located.
 
+
 - 1/27/2026
 
 **TO-DO - Requirements**
-- Use strings, numbers, and Boolean values cached within variables.
-- Demonstrate the retrieval, manipulation, and removal of items in an array or properties in an object. - Pop, push?
+
 - Program outputs processed data as described above. Partial credit will be earned depending on the level of adherence to the described behavior.
 - Ensure that the program runs without errors (comment out things that do not work, and explain your blockers - you can still receive partial credit).
 - Commit frequently to the git repository.
 
+
 REDO - Requirements
-- Utilize at least two different types of loops.
+
 - Utilize at least one loop control keyword such as break or continue.
 - Use operators to perform calculations on variables and literals.
 
@@ -20,11 +21,13 @@ REDO - Requirements
 **Completed - Requirements**
 - Declare variables properly using let and const where appropriate.
 - Use at least two if/else statements to control program flow. Optionally, use at least one switch statement.
-
+- Demonstrate the retrieval, manipulation, and removal of items in an array or properties in an object. - Pop, push?
 - Create and/or manipulate arrays and objects.
 - Use try/catch statements to manage potential errors in the code, such as incorrectly formatted or typed data being fed into your program.
 - Use functions to handle repeated tasks.
 - Include a README file that contains a description of your application.
+- Utilize at least two different types of loops.
+- Use strings, numbers, and Boolean values cached within variables.
 
 
 
