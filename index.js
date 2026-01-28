@@ -185,18 +185,20 @@ function getLearnerData(course, ag, submissions) {
 
             
             learners.push({id: info.learner_id, avg: average, 1: score1, 2: score2,}); // need to calculate the avg, 1, and 2 in seperate ifs if assignment === 1 or etc
+            
             console.log("after", score2)
             
 
 
           }
-        //  for (match in learners){ // This for loop gets rid of duplicate entries. 
+          for (match in learners){ // This for loop gets rid of duplicate entries. 
             // MAKE SURE TO RUN AS ONE OF THE LAST LOOPS.
-      //      if(learners[match] === learners[match]){
-              //This is causing a bug that is declaring 2's score to to object
-          //    learners.pop(match);
-         //   }
-        //  }
+            if(learners[match] !== learners[match]){
+              //This is causing a bug that is declaring 2's score to the object
+              learners.pop(match);
+            }
+          }
+
 
           console.log(learners2);
     //This determines the weighted average of the scores, make sure to do this last, as that allows the penalties to be applied.
