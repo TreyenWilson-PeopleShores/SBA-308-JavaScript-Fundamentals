@@ -4,28 +4,30 @@ This is my SBA-308 assignment. In it, I am trying to properly format the data to
 - 1/27/2026
 
 **TO-DO - Requirements**
-- Use operators to perform calculations on variables and literals.
 - Use strings, numbers, and Boolean values cached within variables.
-
-
-
-- Utilize at least one loop control keyword such as break or continue.
-
 - Demonstrate the retrieval, manipulation, and removal of items in an array or properties in an object. - Pop, push?
-
 - Program outputs processed data as described above. Partial credit will be earned depending on the level of adherence to the described behavior.
 - Ensure that the program runs without errors (comment out things that do not work, and explain your blockers - you can still receive partial credit).
 - Commit frequently to the git repository.
+
+REDO - Requirements
+- Utilize at least two different types of loops.
+- Utilize at least one loop control keyword such as break or continue.
+- Use operators to perform calculations on variables and literals.
+
 
 
 **Completed - Requirements**
 - Declare variables properly using let and const where appropriate.
 - Use at least two if/else statements to control program flow. Optionally, use at least one switch statement.
-- Utilize at least two different types of loops.
+
 - Create and/or manipulate arrays and objects.
 - Use try/catch statements to manage potential errors in the code, such as incorrectly formatted or typed data being fed into your program.
 - Use functions to handle repeated tasks.
 - Include a README file that contains a description of your application.
+
+
+
 
 **Instructions**
 You will create a script that gathers data, processes it, and then outputs a consistent result as described by a specification. This is a very typical situation in industry, and this particular scenario has been modified from a real application. The data you will use is provided below.

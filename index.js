@@ -82,11 +82,13 @@ function NotANumberError(number){
 
 function LaterDate(dueDate, submittedDate){ //Checks to see if Due date is before submitted date, if so, returns true.
     let date1 = new Date(dueDate); let date2 = new Date(submittedDate); // Makes both dates into usable formats
-    return submittedDate>dueDate;
+    const late = submittedDate>dueDate;
+    return late;
 }
 
 function getLearnerData(course, ag, submissions) {
     let learners = [{learner_id: 123, averageScore: 1, a1:.5, a2: .4,},{learner_id: 125, averageScore: 1, a1:.5, a2: .4,}]; // This array is to store learner information
+    let learners2 = [];
     try{
         if(course.id!==ag.course_id){ // Checks to see if the course id is valid, if not, sends an error.
             throw new Error("Incorrect course ID.");
@@ -121,56 +123,68 @@ function getLearnerData(course, ag, submissions) {
     } catch(error){
         console.log("There was an error: " + error.message);
     }
+    // MAKE SURE TO ALSO CHECK ALL ASSIGNMENTS, also the 3rd assignment
 
+            function tempSTOP(){
+            for(const assignment of ag.assignments){ 
+            //This puts the average score for assignments 1 and 2 into the learners array
+                for(const submission of submissions){
+                    let submittedDate = new Date(submission.submission.submitted_at);
+                    let dueDate = new Date(assignment.due_at);
+                    if(assignment.id===submission.assignment_id && assignment.id==1){
+                        if(submission.learner_id===125){
+                            //console.log(submission.submission.score, assignment.points_possible);
+                            if(submittedDate>dueDate) // checks to see if the submitted date is late
+                            { learners[0].a1 = submission.submission.score/assignment.points_possible
+                              learners[0].a1 = learners[0].a1*.9;
+                              continue;
+                            }
+                            learners[0].a1 = submission.submission.score/assignment.points_possible
+                        } else if(submission.learner_id===132){
+                            if(submittedDate>dueDate) // checks to see if the submitted date is late
+                            { learners[1].a1 = submission.submission.score/assignment.points_possible
+                              learners[1].a1 = learners[1].a1*.9;
+                              continue;
+                            }
+                            learners[1].a1 = submission.submission.score/assignment.points_possible
+                        }
 
-    for(const assignment of ag.assignments){ 
-    //This puts the average score for assignments 1 and 2 into the learners array
-        for(const submission of submissions){
-            let submittedDate = new Date(submission.submission.submitted_at);
-            let dueDate = new Date(assignment.due_at);
-            if(assignment.id===submission.assignment_id && assignment.id==1){
-                if(submission.learner_id===125){
-                    //console.log(submission.submission.score, assignment.points_possible);
-                    if(submittedDate>dueDate) // checks to see if the submitted date is late
-                    { learners[0].a1 = submission.submission.score/assignment.points_possible
-                      learners[0].a1 = learners[0].a1*.9;
-                      continue;
+                    } else if(assignment.id===submission.assignment_id && assignment.id==2){
+                        if(submission.learner_id===125){
+                            if(submittedDate>dueDate) // checks to see if the submitted date is late
+                            { learners[0].a2 = submission.submission.score/assignment.points_possible
+                              learners[0].a2 = learners[0].a2*.9;
+                              continue;
+                            }
+                            learners[0].a2 = submission.submission.score/assignment.points_possible
+                        } else if(submission.learner_id===132){
+                            if(submittedDate>dueDate) // checks to see if the submitted date is late
+                            { learners[1].a2 = submission.submission.score/assignment.points_possible
+                              learners[1].a2 = learners[1].a2*.9;
+                              continue;
+                            }
+                            learners[1].a2 = submission.submission.score/assignment.points_possible
+                        }
                     }
-                    learners[0].a1 = submission.submission.score/assignment.points_possible
-                } else if(submission.learner_id===132){
-                    if(submittedDate>dueDate) // checks to see if the submitted date is late
-                    { learners[1].a1 = submission.submission.score/assignment.points_possible
-                      learners[1].a1 = learners[1].a1*.9;
-                      continue;
-                    }
-                    learners[1].a1 = submission.submission.score/assignment.points_possible
-                }
-
-            } else if(assignment.id===submission.assignment_id && assignment.id==2){
-                if(submission.learner_id===125){
-                    if(submittedDate>dueDate) // checks to see if the submitted date is late
-                    { learners[0].a2 = submission.submission.score/assignment.points_possible
-                      learners[0].a2 = learners[0].a2*.9;
-                      continue;
-                    }
-                    learners[0].a2 = submission.submission.score/assignment.points_possible
-                } else if(submission.learner_id===132){
-                    if(submittedDate>dueDate) // checks to see if the submitted date is late
-                    { learners[1].a2 = submission.submission.score/assignment.points_possible
-                      learners[1].a2 = learners[1].a2*.9;
-                      continue;
-                    }
-                    learners[1].a2 = submission.submission.score/assignment.points_possible
-                }
+                } 
             }
-        } 
-    }
+          } // end of temp function
 
+          // Starting from the ground up - code
+          for(const assignment of ag.assignments){
+            for(const submission of submissions){
+              if(submission.assignment_id===assignment.id){
+                learners2.push({learner_id: submission.learner_id, assignment_id: submission.assignment_id, score: submission.submission.score, points_possible: assignment.points_possible, submitted: new Date(submission.submission.submitted_at), due: new Date(assignment.due_at), });
+              }
+              console.log(learners2);
+            }
+          }
+          
 
     //This determines the weighted average of the scores, make sure to do this last, as that allows the penalties to be applied.
     for(element of learners){
         wholePoints1 = element.a1*ag.assignments[0].points_possible;
-        wholePoints2 = element.a2*ag.assignments[1].points_possible
+        wholePoints2 = element.a2*ag.assignments[1].points_possible;
         element.averageScore= ((wholePoints1)+(wholePoints2))/((ag.assignments[0].points_possible+ag.assignments[1].points_possible))
         //This for loop first turns the a1 and a2 decimals back into points, then, to get the weight average, they are added together then divied by the points all together.
     }
