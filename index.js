@@ -174,18 +174,7 @@ function getLearnerData(course, ag, submissions) {
           function calculateScore(score, points_possible){
 
           }
-          function noteLearnerID(learnerID){
-            console.log(learnerID); // this categorizes the learner ID
-            for(const learner of learners){
-              console.log(learnerID);
-              if (learners.some(learnerID)){
-                console.log("It is");
-                break;
-              };
-              learners.push({id:learnerID});
-            }
-            console.log(learners);
-          }
+
           // Starting from the ground up - code
           for(const assignment of ag.assignments){
             for(const submission of submissions){
@@ -195,7 +184,7 @@ function getLearnerData(course, ag, submissions) {
             }
           }
           for(info of learners2){
-            //noteLearnerID(info.learner_id);
+            
             if(info.submitted<Date){
               learners2.pop(info);
               
