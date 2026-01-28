@@ -154,8 +154,7 @@ function getLearnerData(course, ag, submissions) {
                 if(!organizeByLearners[id]){
                     organizeByLearners[id] = [];
                 }
-                organizeByLearners[id].push(info);
-                
+                organizeByLearners[id].push(info);  
             }
 
             for (let learner_ID in organizeByLearners){
@@ -164,6 +163,7 @@ function getLearnerData(course, ag, submissions) {
               let needsGraded = true;
               for(let info of organizeByLearners[learner_ID]){
                 let score = 0;
+                possiblePoints = 0;
                 console.log("info:", info, "organ learner id:", organizeByLearners[learner_ID]);
 
                 if(info.due>new Date()){
@@ -177,10 +177,14 @@ function getLearnerData(course, ag, submissions) {
                     score = penaltyScore;
                     possiblePoints = info.points_possible;
                 }
-                //learners[]= {score};
-               //learners = [{id:info.learner_id, [info.assignment_id]: score}] Overwrites entry each generation?
-               
+                else{
+                  score = calculateScore(info.score, info.points_possible, false);
+                  points_possible = info.points_possible;
+                }
 
+                //learners[]= {score};
+                //learners = [{id:info.learner_id, [info.assignment_id]: score}]// Overwrites entry each generation?
+               
                 learners.push({id: info.learner_id, avg: "temp", [info.assignment_id]: score,})
                 if(needsGraded === false){ //This HAS to come after pushing the assignment id!!!
                   // This checks to see if the assignment has been marked to only be graded at a later date,
@@ -189,10 +193,37 @@ function getLearnerData(course, ag, submissions) {
                   needsGraded = true; 
                 }
                 totalScore+=score;
+                //IMPORTANT ===> ACTION PLAN: learners provides all the information required for me to finalize the output!
+
               // Second loop
+            /*  for (let i = 1; i<learners.length;i+=1){ // This deletes secondary learner ids
+                if(i===learners.length){
+                  console.log("is this working?")
+                  break;
+                }
+                console.log("learners", learners[i-1].id);
+                
+                if (learners[i].id === learners[i-1].id){
+                  learners.pop(i);
+                }
+              }*/
               }
             // First loop loop
             }
+
+
+          let organizeLearners2 = {}; // This will organize the FINAL learners to prepare for result
+            for(info of learners){ // This loop is organzing assignments by learners
+                let id = info.id;
+                if(!organizeLearners2[id]){
+                    organizeLearners2[id] = [];
+                }
+                organizeLearners2[id].push(info);  
+            }
+            console.log ("or2", organizeLearners2);
+
+
+
 
 
           let score1 = 10;  let possiblePoints1 = 0;
@@ -245,9 +276,9 @@ function getLearnerData(course, ag, submissions) {
           } 
         } //end of temp function
 
-          for (match in learners){ // This for loop gets rid of duplicate entries. 
+          for (match in learners){ // This loop removes OTHER learners, but keeps the assignments of one learner!
             // MAKE SURE TO RUN AS ONE OF THE LAST LOOPS.
-            if(learners[match] !== learners[match]){
+            if(learners[match] !== learners[match]){ // make !== -> === when you want to run
               //This is causing a bug that is declaring 2's score to the object
               learners.pop(match);
             }
