@@ -178,6 +178,9 @@ function getLearnerData(course, ag, submissions) {
                     possiblePoints = info.points_possible;
                 }
                 //learners[]= {score};
+               //learners = [{id:info.learner_id, [info.assignment_id]: score}] Overwrites entry each generation?
+               
+
                 learners.push({id: info.learner_id, avg: "temp", [info.assignment_id]: score,})
                 if(needsGraded === false){ //This HAS to come after pushing the assignment id!!!
                   // This checks to see if the assignment has been marked to only be graded at a later date,
@@ -185,7 +188,7 @@ function getLearnerData(course, ag, submissions) {
                   learners.pop(info);
                   needsGraded = true; 
                 }
-
+                totalScore+=score;
               // Second loop
               }
             // First loop loop
