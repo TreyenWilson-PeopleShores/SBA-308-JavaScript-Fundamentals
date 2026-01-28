@@ -86,6 +86,16 @@ function LaterDate(dueDate, submittedDate){ //Checks to see if Due date is befor
     return late;
 }
 
+function calculateScore(score, points_possible, penalty=false){
+  let result = score/points_possible;
+
+  if(penalty==true){
+    result=result*.9
+  }
+  console.log(result);
+  return result;
+}
+
 function getLearnerData(course, ag, submissions) {
     let learners = []; // This array is finally send out to print
     let learners2 = []; // This is to organize all the data into a single array
@@ -125,55 +135,6 @@ function getLearnerData(course, ag, submissions) {
     }
     // MAKE SURE TO ALSO CHECK ALL ASSIGNMENTS, also the 3rd assignment
 
-            function tempSTOP(){
-            for(const assignment of ag.assignments){ 
-            //This puts the average score for assignments 1 and 2 into the learners array
-                for(const submission of submissions){
-                    let submittedDate = new Date(submission.submission.submitted_at);
-                    let dueDate = new Date(assignment.due_at);
-                    if(assignment.id===submission.assignment_id && assignment.id==1){
-                        if(submission.learner_id===125){
-                            //console.log(submission.submission.score, assignment.points_possible);
-                            if(submittedDate>dueDate) // checks to see if the submitted date is late
-                            { learners[0].a1 = submission.submission.score/assignment.points_possible
-                              learners[0].a1 = learners[0].a1*.9;
-                              continue;
-                            }
-                            learners[0].a1 = submission.submission.score/assignment.points_possible
-                        } else if(submission.learner_id===132){
-                            if(submittedDate>dueDate) // checks to see if the submitted date is late
-                            { learners[1].a1 = submission.submission.score/assignment.points_possible
-                              learners[1].a1 = learners[1].a1*.9;
-                              continue;
-                            }
-                            learners[1].a1 = submission.submission.score/assignment.points_possible
-                        }
-
-                    } else if(assignment.id===submission.assignment_id && assignment.id==2){
-                        if(submission.learner_id===125){
-                            if(submittedDate>dueDate) // checks to see if the submitted date is late
-                            { learners[0].a2 = submission.submission.score/assignment.points_possible
-                              learners[0].a2 = learners[0].a2*.9;
-                              continue;
-                            }
-                            learners[0].a2 = submission.submission.score/assignment.points_possible
-                        } else if(submission.learner_id===132){
-                            if(submittedDate>dueDate) // checks to see if the submitted date is late
-                            { learners[1].a2 = submission.submission.score/assignment.points_possible
-                              learners[1].a2 = learners[1].a2*.9;
-                              continue;
-                            }
-                            learners[1].a2 = submission.submission.score/assignment.points_possible
-                        }
-                    }
-                } 
-            }
-          } // end of temp function
-
-
-          function calculateScore(score, points_possible){
-
-          }
 
           // Starting from the ground up - code
           for(const assignment of ag.assignments){
@@ -183,22 +144,60 @@ function getLearnerData(course, ag, submissions) {
               }
             }
           }
-          for(info of learners2){
+          let score1 = 10;  let possiblePoints1 = 0;
+          let score2 = 20;  let possiblePoints2 = 0;
+          let average = 0;
+          for(info of learners2){ // This loop is moving all the data from learners2 to learners
             
-            if(info.submitted<Date){
+            if(info.due>new Date()){
+            // This gets rid of entries with due dates in the future
               learners2.pop(info);
-              
+            } 
+            else if(info.due<info.submitted){ // checks for late submissions
+              penaltyScore = calculateScore(info.score, info.points_possible, true);
+              console.log(info.assignment_id);
+              if(info.assignment_id==1){ 
+                
+                score1 = penaltyScore;
+                possiblePoints1 = info.points_possible;
+              } 
+              else if(info.assignment_id==2){
+                console.log("Works?")
+                score2 = penaltyScore;
+                possiblePoints2 = info.points_possible;
+              }
+            }else{
+              if(info.assignment_id==1){
+                score1 = calculateScore(info.score, info.points_possible);
+                possiblePoints1 = info.points_possible;
+              } 
+              if(info.assignment_id==2){
+                console.log("yep", info.score, info.points_possible);
+                console.log("Works2?")
+                score2 = calculateScore(info.score, info.points_possible);
+                possiblePoints2 = info.points_possible;
+                
+              }
             }
+            console.log("out",score2);
 
-            learners.push({id: info.learner_id});
+            average = ((score1*possiblePoints1)+(score2*possiblePoints2))/(possiblePoints1+possiblePoints2)
+
+            
+            learners.push({id: info.learner_id, avg: average, 1: score1, 2: score2,}); // need to calculate the avg, 1, and 2 in seperate ifs if assignment === 1 or etc
+            console.log("after", score2)
+            
+
+
           }
-          for (match in learners){ // This for loop gets rid of duplicate entries. 
+        //  for (match in learners){ // This for loop gets rid of duplicate entries. 
             // MAKE SURE TO RUN AS ONE OF THE LAST LOOPS.
-            if(learners[match] == learners[match]){
-              learners.pop(match);
-            }
-          }
-          
+      //      if(learners[match] === learners[match]){
+              //This is causing a bug that is declaring 2's score to to object
+          //    learners.pop(match);
+         //   }
+        //  }
+
           console.log(learners2);
     //This determines the weighted average of the scores, make sure to do this last, as that allows the penalties to be applied.
  
