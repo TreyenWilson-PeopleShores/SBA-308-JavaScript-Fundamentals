@@ -96,7 +96,7 @@ function calculateScore(score, points_possible, penalty=false){
   console.log(result);
   return result;
 }
-
+let results = [];
 function getLearnerData(course, ag, submissions) {
     let learners = []; // This array is finally send out to print
     let learners2 = []; // This is to organize all the data into a single array
@@ -210,7 +210,7 @@ function getLearnerData(course, ag, submissions) {
               }
             // First loop loop
             }
-
+          
 
           let organizeLearners2 = {}; // This will organize the FINAL learners to prepare for result
             for(info of learners){ // This loop is organzing assignments by learners
@@ -221,7 +221,12 @@ function getLearnerData(course, ag, submissions) {
                 organizeLearners2[id].push(info);  
             }
             console.log ("or2", organizeLearners2);
-
+            for (learner_id in organizeLearners2){
+             // results[learner_id] = {id: [learner_id]};
+              for(info in organizeLearners2[learner_id]){ // This will be the same learner id
+                results[info] = {id: learner_id, avg: "temp1", };
+              }
+            }
 
 
 
@@ -289,7 +294,7 @@ function getLearnerData(course, ag, submissions) {
     //This determines the weighted average of the scores, make sure to do this last, as that allows the penalties to be applied.
  
 
-
+    
     const result = learners; //This sets learns to the result.
     /*[ // use this for format    - Use this for formulas
     {
@@ -312,4 +317,5 @@ function getLearnerData(course, ag, submissions) {
 
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
-console.log(result);
+//console.log(result);
+console.log(results);
