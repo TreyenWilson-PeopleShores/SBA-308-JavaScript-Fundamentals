@@ -87,8 +87,8 @@ function LaterDate(dueDate, submittedDate){ //Checks to see if Due date is befor
 }
 
 function getLearnerData(course, ag, submissions) {
-    let learners = [{learner_id: 123, averageScore: 1, a1:.5, a2: .4,},{learner_id: 125, averageScore: 1, a1:.5, a2: .4,}]; // This array is to store learner information
-    let learners2 = [];
+    let learners = []; // This array is finally send out to print
+    let learners2 = []; // This is to organize all the data into a single array
     try{
         if(course.id!==ag.course_id){ // Checks to see if the course id is valid, if not, sends an error.
             throw new Error("Incorrect course ID.");
@@ -170,24 +170,49 @@ function getLearnerData(course, ag, submissions) {
             }
           } // end of temp function
 
+
+          function calculateScore(score, points_possible){
+
+          }
+          function noteLearnerID(learnerID){
+            console.log(learnerID); // this categorizes the learner ID
+            for(const learner of learners){
+              console.log(learnerID);
+              if (learners.some(learnerID)){
+                console.log("It is");
+                break;
+              };
+              learners.push({id:learnerID});
+            }
+            console.log(learners);
+          }
           // Starting from the ground up - code
           for(const assignment of ag.assignments){
             for(const submission of submissions){
               if(submission.assignment_id===assignment.id){
                 learners2.push({learner_id: submission.learner_id, assignment_id: submission.assignment_id, score: submission.submission.score, points_possible: assignment.points_possible, submitted: new Date(submission.submission.submitted_at), due: new Date(assignment.due_at), });
               }
-              console.log(learners2);
+            }
+          }
+          for(info of learners2){
+            //noteLearnerID(info.learner_id);
+            if(info.submitted<Date){
+              learners2.pop(info);
+              
+            }
+
+            learners.push({id: info.learner_id});
+          }
+          for (match in learners){ // This for loop gets rid of duplicate entries. 
+            // MAKE SURE TO RUN AS ONE OF THE LAST LOOPS.
+            if(learners[match] == learners[match]){
+              learners.pop(match);
             }
           }
           
-
+          console.log(learners2);
     //This determines the weighted average of the scores, make sure to do this last, as that allows the penalties to be applied.
-    for(element of learners){
-        wholePoints1 = element.a1*ag.assignments[0].points_possible;
-        wholePoints2 = element.a2*ag.assignments[1].points_possible;
-        element.averageScore= ((wholePoints1)+(wholePoints2))/((ag.assignments[0].points_possible+ag.assignments[1].points_possible))
-        //This for loop first turns the a1 and a2 decimals back into points, then, to get the weight average, they are added together then divied by the points all together.
-    }
+ 
 
 
     const result = learners; //This sets learns to the result.
