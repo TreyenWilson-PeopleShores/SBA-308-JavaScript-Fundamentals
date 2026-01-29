@@ -96,6 +96,8 @@ function calculateScore(score, points_possible, penalty=false){
   console.log(result);
   return result;
 }
+
+
 let results = [];
 function getLearnerData(course, ag, submissions) {
     let learners = []; // This array is finally send out to print
@@ -185,7 +187,7 @@ function getLearnerData(course, ag, submissions) {
                 //learners[]= {score};
                 //learners = [{id:info.learner_id, [info.assignment_id]: score}]// Overwrites entry each generation?
                
-                learners.push({id: info.learner_id, avg: "temp", [info.assignment_id]: score,})
+                learners.push({id: info.learner_id, avg: "temp", [info.assignment_id]: score, possiblePoints: info.points_possible,fullPoints: info.score})
                 if(needsGraded === false){ //This HAS to come after pushing the assignment id!!!
                   // This checks to see if the assignment has been marked to only be graded at a later date,
                   // then it deletes the entry from learners
@@ -223,6 +225,7 @@ function getLearnerData(course, ag, submissions) {
 
 
             console.log ("or2", organizeLearners2);
+            let totalPoints = 0; let totalPossible = 0;
             for (let learner_id in organizeLearners2){
 
               let finished ={
@@ -239,13 +242,16 @@ function getLearnerData(course, ag, submissions) {
                 //above gets the unknown assignment id
                 console.log ("here again", info);
                   //finished[info] = ({id: info.id, avg: "temp1",});
-                finished.avg = 5/3; // temp value
-                finished[assignment_id] = info[assignment_id];
+                  totalPoints+=(info[assignment_id]*info.possiblePoints); // This equation reverts the score back into a point format
+                  totalPossible+=info.possiblePoints;
+                  finished[assignment_id] = info[assignment_id];
                 //The above equation allows the assignments to be set to their grades
-                  
+                
               // second loop
               
               }
+              console.log("total: ", totalPoints, "possible", totalPossible);
+              finished.avg = totalPoints/totalPossible;
               //results[info] = ({id: organizeLearners2[learner_id][info].id, avg: "temp1",});
             // outer loop
             results.push(finished);
@@ -259,50 +265,6 @@ function getLearnerData(course, ag, submissions) {
           let average = 0;
 
 
-          function tempCode(){
-          for(info of learners2){ // This loop is moving all the data from learners2 to learners
-            
-            if(info.due>new Date()){
-            // This gets rid of entries with due dates in the future
-              learners2.pop(info);
-            } 
-            else if(info.due<info.submitted){ // checks for late submissions
-              penaltyScore = calculateScore(info.score, info.points_possible, true);
-              console.log(info.assignment_id);
-              if(info.assignment_id==1){ 
-                
-                score1 = penaltyScore;
-                possiblePoints1 = info.points_possible;
-              } 
-              else if(info.assignment_id==2){
-                console.log("Works?")
-                score2 = penaltyScore;
-                possiblePoints2 = info.points_possible;
-              }
-            }else{
-              if(info.assignment_id==1){
-                score1 = calculateScore(info.score, info.points_possible);
-                possiblePoints1 = info.points_possible;
-              } 
-              if(info.assignment_id==2){
-                console.log("yep", info.score, info.points_possible);
-                console.log("Works2?")
-                score2 = calculateScore(info.score, info.points_possible);
-                possiblePoints2 = info.points_possible;
-                
-              }
-            }
-            console.log("out",score2);
-
-            average = ((score1*possiblePoints1)+(score2*possiblePoints2))/(possiblePoints1+possiblePoints2)
-
-            
-            learners.push({id: info.learner_id, avg: average, 1: score1, 2: score2,}); // need to calculate the avg, 1, and 2 in seperate ifs if assignment === 1 or etc
-            
-            console.log("after", score2)
-          
-          } 
-        } //end of temp function
 
           for (match in learners){ // This loop removes OTHER learners, but keeps the assignments of one learner!
             // MAKE SURE TO RUN AS ONE OF THE LAST LOOPS.
