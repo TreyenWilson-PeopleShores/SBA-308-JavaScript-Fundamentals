@@ -94,7 +94,7 @@ function calculateScore(score, points_possible, penalty=false){
     result=result*.9
     break;
   }
-  console.log(result);
+//  console.log(result);
   return result;
 }
 
@@ -164,7 +164,7 @@ function getLearnerData(course, ag, submissions) {
               for(let info of organizeByLearners[learner_ID]){
                 let score = 0;
                 possiblePoints = 0;
-                console.log("info:", info, "organ learner id:", organizeByLearners[learner_ID]);
+                //console.log("info:", info, "organ learner id:", organizeByLearners[learner_ID]);
 
                 if(info.due>new Date()){
                   // This gets rid of entries with due dates in the future
@@ -173,7 +173,7 @@ function getLearnerData(course, ag, submissions) {
                 }
                 else if(info.due<info.submitted){ // checks for late submissions
                   penaltyScore = calculateScore(info.score, info.points_possible, true);
-                  console.log(info.assignment_id);                
+                  //console.log(info.assignment_id);                
                     score = penaltyScore;
                     possiblePoints = info.points_possible;
                 }
@@ -196,17 +196,7 @@ function getLearnerData(course, ag, submissions) {
                 //IMPORTANT ===> ACTION PLAN: learners provides all the information required for me to finalize the output!
 
               // Second loop
-            /*  for (let i = 1; i<learners.length;i+=1){ // This deletes secondary learner ids
-                if(i===learners.length){
-                  console.log("is this working?")
-                  break;
-                }
-                console.log("learners", learners[i-1].id);
-                
-                if (learners[i].id === learners[i-1].id){
-                  learners.pop(i);
-                }
-              }*/
+   
               }
             // First loop loop
             }
@@ -222,7 +212,7 @@ function getLearnerData(course, ag, submissions) {
             }
 
 
-            console.log ("or2", organizeLearners2);
+            //console.log ("or2", organizeLearners2);
             let totalPoints = 0; let totalPossible = 0;
             for (let learner_id in organizeLearners2){
 
@@ -230,15 +220,15 @@ function getLearnerData(course, ag, submissions) {
                 id: Number(learner_id),
                 avg: 1,
               }
-              console.log("Finish", finished)
+             // console.log("Finish", finished)
              // results[learner_id] = {id: [learner_id]};
               for(let info of organizeLearners2[learner_id]){ // This will be the same learner id
-                console.log("test", Object.keys(info));
-                console.log("HERE", info);
+             //   console.log("test", Object.keys(info));
+              //  console.log("HERE", info);
                 assignment_ids = Object.keys(info)
                 assignment_id = assignment_ids[0];
                 //above gets the unknown assignment id
-                console.log ("here again", info);
+               // console.log ("here again", info);
                   //finished[info] = ({id: info.id, avg: "temp1",});
                   totalPoints+=(info[assignment_id]*info.possiblePoints); // This equation reverts the score back into a point format
                   totalPossible+=info.possiblePoints;
@@ -248,7 +238,7 @@ function getLearnerData(course, ag, submissions) {
               // second loop
               
               }
-              console.log("total: ", totalPoints, "possible", totalPossible);
+             // console.log("total: ", totalPoints, "possible", totalPossible);
               finished.avg = totalPoints/totalPossible;
               //results[info] = ({id: organizeLearners2[learner_id][info].id, avg: "temp1",});
             // outer loop
@@ -262,21 +252,15 @@ function getLearnerData(course, ag, submissions) {
 
 
 
-          for (match in learners){ // This loop removes OTHER learners, but keeps the assignments of one learner!
-            // MAKE SURE TO RUN AS ONE OF THE LAST LOOPS.
-            if(learners[match] !== learners[match]){ // make !== -> === when you want to run
-              //This is causing a bug that is declaring 2's score to the object
-              learners.pop(match);
-            }
-          }
 
 
-          console.log(organizeByLearners);
+
+          //console.log(organizeByLearners);
     //This determines the weighted average of the scores, make sure to do this last, as that allows the penalties to be applied.
  
 
     
-    const result = learners; //This sets learns to the result.
+    const result = results; //This sets learns to the result.
     /*[ // use this for format    - Use this for formulas
     {
         id: submissions[x].learner_id,
@@ -299,4 +283,4 @@ function getLearnerData(course, ag, submissions) {
 const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
 
 console.log(result);
-console.log(results);
+//console.log(results);

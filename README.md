@@ -1,14 +1,13 @@
 # SBA-308-JavaScript-Fundamentals
 This is my SBA-308 assignment. In it, I am trying to properly format the data to print out what the assignment desires. It needs Node.js. To run the code, type "node index.js" where the index.js is located.
-
+I have successfully moved the data from the in initial inputs, organized it, collected date from that, organized it by learner ID again, and finally, took that data and used it to push it to the final result to be printed to the user.
 
 - 1/27/2026
 
 **TO-DO - Requirements**
 
-- Program outputs processed data as described above. Partial credit will be earned depending on the level of adherence to the described behavior.
-- Ensure that the program runs without errors (comment out things that do not work, and explain your blockers - you can still receive partial credit).
-- Commit frequently to the git repository.
+
+
 
 
 REDO - Requirements
@@ -29,7 +28,9 @@ REDO - Requirements
 - Use strings, numbers, and Boolean values cached within variables.
 - Use operators to perform calculations on variables and literals.
 - Utilize at least one loop control keyword such as break or continue.
-
+- Program outputs processed data as described above. Partial credit will be earned depending on the level of adherence to the described behavior.
+- Ensure that the program runs without errors (comment out things that do not work, and explain your blockers - you can still receive partial credit).
+- Commit frequently to the git repository.
 
 
 **Instructions**
