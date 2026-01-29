@@ -239,8 +239,9 @@ function getLearnerData(course, ag, submissions) {
                 //above gets the unknown assignment id
                 console.log ("here again", info);
                   //finished[info] = ({id: info.id, avg: "temp1",});
-                finished.avg = 5/3;
-                finished[assignment_id] = "test";
+                finished.avg = 5/3; // temp value
+                finished[assignment_id] = info[assignment_id];
+                //The above equation allows the assignments to be set to their grades
                   
               // second loop
               
