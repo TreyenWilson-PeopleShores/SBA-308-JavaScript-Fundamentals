@@ -13,8 +13,7 @@ This is my SBA-308 assignment. In it, I am trying to properly format the data to
 
 REDO - Requirements
 
-- Utilize at least one loop control keyword such as break or continue.
-- Use operators to perform calculations on variables and literals.
+
 
 
 
@@ -28,7 +27,8 @@ REDO - Requirements
 - Include a README file that contains a description of your application.
 - Utilize at least two different types of loops.
 - Use strings, numbers, and Boolean values cached within variables.
-
+- Use operators to perform calculations on variables and literals.
+- Utilize at least one loop control keyword such as break or continue.
 
 
 

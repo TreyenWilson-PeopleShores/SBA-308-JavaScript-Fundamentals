@@ -89,9 +89,10 @@ function LaterDate(dueDate, submittedDate){ //Checks to see if Due date is befor
 
 function calculateScore(score, points_possible, penalty=false){
   let result = score/points_possible;
-
-  if(penalty==true){
+  
+  while(penalty==true){
     result=result*.9
+    break;
   }
   console.log(result);
   return result;
@@ -137,9 +138,6 @@ function getLearnerData(course, ag, submissions) {
         console.log("There was an error: " + error.message);
     }
     // MAKE SURE TO ALSO CHECK ALL ASSIGNMENTS, also the 3rd assignment
-
-
-
           // Starting from the ground up - code
           for(const assignment of ag.assignments){
             for(const submission of submissions){
@@ -260,9 +258,7 @@ function getLearnerData(course, ag, submissions) {
 
 
 
-          let score1 = 10;  let possiblePoints1 = 0;
-          let score2 = 20;  let possiblePoints2 = 0;
-          let average = 0;
+
 
 
 
